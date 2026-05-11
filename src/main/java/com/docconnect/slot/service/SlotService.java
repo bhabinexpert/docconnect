@@ -45,8 +45,10 @@ public class SlotService {
         if (slot.getDoctorId() <= 0) {
             return "Please select a doctor.";
         }
-        if (slot.getDayOfWeek() == null || slot.getDayOfWeek().trim().isEmpty()) {
-            return "Day of week is required.";
+        boolean hasDayOfWeek = slot.getDayOfWeek() != null && !slot.getDayOfWeek().trim().isEmpty();
+        boolean hasSpecificDate = slot.getSpecificDate() != null;
+        if (!hasDayOfWeek && !hasSpecificDate) {
+            return "Please select a recurring day or a specific date.";
         }
         if (slot.getStartTime() == null || slot.getEndTime() == null) {
             return "Start and end times are required.";
