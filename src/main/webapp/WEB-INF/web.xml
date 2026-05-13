@@ -3,4 +3,284 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
+    <display-name>DocConnect Nepal</display-name>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <!-- Servlets -->
+    <servlet>
+        <servlet-name>HomeServlet</servlet-name>
+        <servlet-class>com.docconnect.HomeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HomeServlet</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AboutServlet</servlet-name>
+        <servlet-class>com.docconnect.AboutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AboutServlet</servlet-name>
+        <url-pattern>/about</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ContactServlet</servlet-name>
+        <servlet-class>com.docconnect.ContactServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ContactServlet</servlet-name>
+        <url-pattern>/contact</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>com.docconnect.user.controller.LoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>com.docconnect.user.controller.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>RegisterServlet</servlet-name>
+        <servlet-class>com.docconnect.user.controller.RegisterServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RegisterServlet</servlet-name>
+        <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DoctorListServlet</servlet-name>
+        <servlet-class>com.docconnect.doctor.controller.DoctorListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DoctorListServlet</servlet-name>
+        <url-pattern>/doctors</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DoctorDetailServlet</servlet-name>
+        <servlet-class>com.docconnect.doctor.controller.DoctorDetailServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DoctorDetailServlet</servlet-name>
+        <url-pattern>/doctor</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PatientDashboardServlet</servlet-name>
+        <servlet-class>com.docconnect.user.controller.PatientDashboardServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PatientDashboardServlet</servlet-name>
+        <url-pattern>/patient/dashboard</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AppointmentServlet</servlet-name>
+        <servlet-class>com.docconnect.appointment.controller.AppointmentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AppointmentServlet</servlet-name>
+        <url-pattern>/patient/appointments</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>BookAppointmentServlet</servlet-name>
+        <servlet-class>com.docconnect.appointment.controller.BookAppointmentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BookAppointmentServlet</servlet-name>
+        <url-pattern>/patient/book</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PaymentServlet</servlet-name>
+        <servlet-class>com.docconnect.payment.controller.PaymentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PaymentServlet</servlet-name>
+        <url-pattern>/patient/payment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PaymentServlet</servlet-name>
+        <url-pattern>/patient/payments</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PaymentServlet</servlet-name>
+        <url-pattern>/patient/payment/verify</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AppointmentReceiptServlet</servlet-name>
+        <servlet-class>com.docconnect.appointment.controller.AppointmentReceiptServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AppointmentReceiptServlet</servlet-name>
+        <url-pattern>/patient/appointment/receipt</url-pattern>
+    </servlet-mapping>
+    <!-- Admin can also export any appointment receipt -->
+    <servlet-mapping>
+        <servlet-name>AppointmentReceiptServlet</servlet-name>
+        <url-pattern>/admin/appointment/receipt</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ProfileServlet</servlet-name>
+        <servlet-class>com.docconnect.user.controller.ProfileServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProfileServlet</servlet-name>
+        <url-pattern>/patient/profile</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminDashboardServlet</servlet-name>
+        <servlet-class>com.docconnect.admin.controller.AdminDashboardServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminDashboardServlet</servlet-name>
+        <url-pattern>/admin/dashboard</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ManageDoctorsServlet</servlet-name>
+        <servlet-class>com.docconnect.admin.controller.ManageDoctorsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ManageDoctorsServlet</servlet-name>
+        <url-pattern>/admin/doctors</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ManageSlotsServlet</servlet-name>
+        <servlet-class>com.docconnect.slot.controller.ManageSlotsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ManageSlotsServlet</servlet-name>
+        <url-pattern>/admin/slots</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ManageSpecializationsServlet</servlet-name>
+        <servlet-class>com.docconnect.specialization.controller.ManageSpecializationsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ManageSpecializationsServlet</servlet-name>
+        <url-pattern>/admin/specializations</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ManageUsersServlet</servlet-name>
+        <servlet-class>com.docconnect.admin.controller.ManageUsersServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ManageUsersServlet</servlet-name>
+        <url-pattern>/admin/users</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminAppointmentsServlet</servlet-name>
+        <servlet-class>com.docconnect.admin.controller.AdminAppointmentsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminAppointmentsServlet</servlet-name>
+        <url-pattern>/admin/appointments</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ReportsServlet</servlet-name>
+        <servlet-class>com.docconnect.admin.controller.ReportsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ReportsServlet</servlet-name>
+        <url-pattern>/admin/reports</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AccessDeniedServlet</servlet-name>
+        <servlet-class>com.docconnect.AccessDeniedServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AccessDeniedServlet</servlet-name>
+        <url-pattern>/access-denied</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SearchApiServlet</servlet-name>
+        <servlet-class>com.docconnect.SearchApiServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SearchApiServlet</servlet-name>
+        <url-pattern>/api/search/doctors</url-pattern>
+    </servlet-mapping>
+
+    <!-- Filters -->
+    <filter>
+        <filter-name>CsrfFilter</filter-name>
+        <filter-class>com.docconnect.filter.CsrfFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CsrfFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>AuthenticationFilter</filter-name>
+        <filter-class>com.docconnect.filter.AuthenticationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/patient/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/admin/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>RoleBasedFilter</filter-name>
+        <filter-class>com.docconnect.filter.RoleBasedFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>RoleBasedFilter</filter-name>
+        <url-pattern>/patient/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>RoleBasedFilter</filter-name>
+        <url-pattern>/admin/*</url-pattern>
+    </filter-mapping>
+
+    <session-config>
+        <session-timeout>30</session-timeout>
+        <cookie-config>
+            <http-only>true</http-only>
+        </cookie-config>
+    </session-config>
+
+    <!-- Error pages
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/views/error/404.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/WEB-INF/views/error/500.jsp</location>
+    </error-page> -->
 </web-app>
