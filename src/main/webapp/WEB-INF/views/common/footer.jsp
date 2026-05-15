@@ -12,7 +12,7 @@
                     </div>
                     <span class="text-xl font-bold text-white">DocConnect</span>
                 </div>
-                <p class="text-gray-400 text-sm leading-relaxed">Your trusted platform for finding the best doctors and booking appointments across Nepal.</p>
+                <p class="text-gray-400 text-sm leading-relaxed">Your trusted platform for finding the best doctors and booking appointments across the city.</p>
             </div>
 
             <!-- Quick Links -->
@@ -43,8 +43,8 @@
             <div>
                 <h4 class="text-white font-semibold mb-4">Contact Us</h4>
                 <ul class="space-y-2.5">
-                    <li class="flex items-center space-x-2 text-sm"><i class="fas fa-map-marker-alt w-4 text-accent-400"></i><span>Kathmandu, Nepal</span></li>
-                    <li class="flex items-center space-x-2 text-sm"><i class="fas fa-phone w-4 text-accent-400"></i><span>+977-1-4XXXXXX</span></li>
+                    <li class="flex items-center space-x-2 text-sm"><i class="fas fa-map-marker-alt w-4 text-accent-400"></i><span>Jhapa, Nepal</span></li>
+                    <li class="flex items-center space-x-2 text-sm"><i class="fas fa-phone w-4 text-accent-400"></i><span>+977 9824009974</span></li>
                     <li class="flex items-center space-x-2 text-sm"><i class="fas fa-envelope w-4 text-accent-400"></i><span>info@docconnect.com.np</span></li>
                 </ul>
                 <div class="flex space-x-3 mt-4">
@@ -56,7 +56,7 @@
         </div>
 
         <div class="border-t border-gray-800 mt-10 pt-6 text-center">
-            <p class="text-gray-500 text-sm">&copy; 2026 DocConnect Nepal. All rights reserved. | University Coursework Project</p>
+            <p class="text-gray-500 text-sm">&copy; 2026 DocConnect Nepal. All rights reserved</p>
         </div>
     </div>
 </footer>

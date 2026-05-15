@@ -50,13 +50,11 @@ public class AppointmentReceiptServlet extends HttpServlet {
                 return;
             }
 
-            // Patients: only allow if confirmed/completed/rescheduled; admins: always allowed
-            if (!isAdmin && !appointment.isConfirmed() && !appointment.isCompleted() && !appointment.isRescheduled()) {
+            Payment payment = paymentService.getPaymentByAppointmentId(appointmentId);
+            if (payment == null || !payment.isCompleted()) {
                 response.sendRedirect(backUrl + "?error=Receipt+not+available+for+this+appointment");
                 return;
             }
-
-            Payment payment = paymentService.getPaymentByAppointmentId(appointmentId);
 
             request.setAttribute("appointment", appointment);
             request.setAttribute("payment", payment);

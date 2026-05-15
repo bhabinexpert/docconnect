@@ -60,24 +60,38 @@
                                         <p class="text-[10px] uppercase tracking-widest font-black text-gray-400">Turn</p>
                                         <p class="text-xl font-black text-primary-600">#${apt.turnNumber}</p>
                                     </div>
-                                    <span class="px-4 py-1.5 rounded-full text-xs font-bold
-                                            ${apt.status == 'confirmed'   ? 'bg-blue-100 text-blue-700' :
-                                              apt.status == 'completed'   ? 'bg-green-100 text-green-700' :
-                                              apt.status == 'rescheduled' ? 'bg-orange-100 text-orange-700' :
-                                              apt.status == 'cancelled'   ? 'bg-red-100 text-red-700' :
-                                                                            'bg-yellow-100 text-yellow-700'}">
-                                            <i class="fas ${apt.status == 'confirmed' ? 'fa-check-circle' :
-                                                            apt.status == 'completed' ? 'fa-check-double' :
-                                                            apt.status == 'rescheduled' ? 'fa-calendar-alt' :
-                                                            apt.status == 'cancelled' ? 'fa-times-circle' :
-                                                            'fa-clock'} mr-1"></i>
-                                            ${apt.status == 'confirmed' ? 'Confirmed' :
-                                                    apt.status == 'completed' ? 'Completed' :
-                                                            apt.status == 'rescheduled' ? 'Rescheduled' :
-                                                                    apt.status == 'cancelled' ? 'Cancelled' : apt.status}
-                                        </span>
+                                    <c:choose>
+                                        <c:when test="${apt.paymentStatus != 'completed' && apt.status != 'cancelled'}">
+                                            <span class="px-4 py-1.5 rounded-full text-xs font-bold bg-yellow-100 text-yellow-700">
+                                                <i class="fas fa-clock mr-1"></i>Payment Pending
+                                            </span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="px-4 py-1.5 rounded-full text-xs font-bold
+                                                    ${apt.status == 'confirmed'   ? 'bg-blue-100 text-blue-700' :
+                                                      apt.status == 'completed'   ? 'bg-green-100 text-green-700' :
+                                                      apt.status == 'rescheduled' ? 'bg-orange-100 text-orange-700' :
+                                                      apt.status == 'cancelled'   ? 'bg-red-100 text-red-700' :
+                                                                                    'bg-yellow-100 text-yellow-700'}">
+                                                <i class="fas ${apt.status == 'confirmed' ? 'fa-check-circle' :
+                                                                apt.status == 'completed' ? 'fa-check-double' :
+                                                                apt.status == 'rescheduled' ? 'fa-calendar-alt' :
+                                                                apt.status == 'cancelled' ? 'fa-times-circle' :
+                                                                'fa-clock'} mr-1"></i>
+                                                ${apt.status == 'confirmed' ? 'Confirmed' :
+                                                        apt.status == 'completed' ? 'Completed' :
+                                                                apt.status == 'rescheduled' ? 'Rescheduled' :
+                                                                        apt.status == 'cancelled' ? 'Cancelled' : apt.status}
+                                            </span>
+                                        </c:otherwise>
+                                    </c:choose>
 
-                                    <c:if test="${apt.status == 'confirmed' || apt.status == 'completed' || apt.status == 'rescheduled'}">
+                                    <c:if test="${apt.paymentStatus != 'completed' && apt.status != 'cancelled'}">
+                                        <a href="${pageContext.request.contextPath}/patient/payment?appointmentId=${apt.id}" class="px-4 py-1.5 bg-purple-600 text-white text-xs font-bold rounded-full hover:bg-purple-700 transition-all flex items-center">
+                                            <i class="fas fa-wallet mr-1"></i> Pay Now
+                                        </a>
+                                    </c:if>
+                                    <c:if test="${apt.paymentStatus == 'completed' && (apt.status == 'confirmed' || apt.status == 'completed' || apt.status == 'rescheduled')}">
                                         <a href="${pageContext.request.contextPath}/patient/appointment/receipt?id=${apt.id}" target="_blank" class="px-4 py-1.5 bg-primary-600 text-white text-xs font-bold rounded-full hover:bg-primary-700 transition-all flex items-center">
                                             <i class="fas fa-print mr-1"></i> Receipt
                                         </a>

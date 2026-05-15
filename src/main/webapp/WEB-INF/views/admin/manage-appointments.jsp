@@ -71,7 +71,14 @@
                                     <td class="px-4 py-4 text-sm text-gray-600 whitespace-nowrap">${apt.appointmentDate}</td>
                                     <td class="px-4 py-4 text-sm text-gray-600 whitespace-nowrap">${apt.slotTime}</td>
                                     <td class="px-4 py-4">
-                                        <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold ${apt.status == 'confirmed' ? 'bg-blue-100 text-blue-700' : apt.status == 'completed' ? 'bg-green-100 text-green-700' : apt.status == 'rescheduled' ? 'bg-orange-100 text-orange-700' : apt.status == 'cancelled' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'}"><i class="fas ${apt.status == 'confirmed' ? 'fa-check-circle' : apt.status == 'completed' ? 'fa-check-double' : apt.status == 'rescheduled' ? 'fa-calendar-alt' : apt.status == 'cancelled' ? 'fa-times-circle' : 'fa-clock'}"></i>${apt.status == 'confirmed' ? 'Confirmed' : apt.status == 'completed' ? 'Completed' : apt.status == 'rescheduled' ? 'Rescheduled' : apt.status == 'cancelled' ? 'Cancelled' : apt.status}</span>
+                                        <c:choose>
+                                            <c:when test="${apt.paymentStatus != 'completed' && apt.status != 'cancelled'}">
+                                                <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-yellow-100 text-yellow-700"><i class="fas fa-clock"></i>Payment Pending</span>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold ${apt.status == 'confirmed' ? 'bg-blue-100 text-blue-700' : apt.status == 'completed' ? 'bg-green-100 text-green-700' : apt.status == 'rescheduled' ? 'bg-orange-100 text-orange-700' : apt.status == 'cancelled' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'}"><i class="fas ${apt.status == 'confirmed' ? 'fa-check-circle' : apt.status == 'completed' ? 'fa-check-double' : apt.status == 'rescheduled' ? 'fa-calendar-alt' : apt.status == 'cancelled' ? 'fa-times-circle' : 'fa-clock'}"></i>${apt.status == 'confirmed' ? 'Confirmed' : apt.status == 'completed' ? 'Completed' : apt.status == 'rescheduled' ? 'Rescheduled' : apt.status == 'cancelled' ? 'Cancelled' : apt.status}</span>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </td>
                                     <td class="px-4 py-4">
                                         <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold ${apt.paymentStatus == 'completed' ? 'bg-green-100 text-green-700' : apt.paymentStatus == 'pending' ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 text-gray-500'}"><i class="fas ${apt.paymentStatus == 'completed' ? 'fa-check-circle' : apt.paymentStatus == 'pending' ? 'fa-clock' : 'fa-times-circle'}"></i>${apt.paymentStatus == 'completed' ? 'Paid' : apt.paymentStatus == 'pending' ? 'Pending' : 'Unpaid'}</span>
@@ -93,12 +100,17 @@
                                         </form>
                                     </td>
                                     <td class="px-4 py-4">
-                                        <a href="${pageContext.request.contextPath}/admin/appointment/receipt?id=${apt.id}&export=true"
-                                           target="_blank"
-                                           title="Export as PDF"
-                                           class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-purple-600 text-white text-xs font-bold rounded-lg hover:bg-purple-700 transition-all shadow-sm">
-                                            <i class="fas fa-file-pdf"></i> PDF
-                                        </a>
+                                        <c:if test="${apt.paymentStatus == 'completed'}">
+                                            <a href="${pageContext.request.contextPath}/admin/appointment/receipt?id=${apt.id}&export=true"
+                                               target="_blank"
+                                               title="Export as PDF"
+                                               class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-purple-600 text-white text-xs font-bold rounded-lg hover:bg-purple-700 transition-all shadow-sm">
+                                                <i class="fas fa-file-pdf"></i> PDF
+                                            </a>
+                                        </c:if>
+                                        <c:if test="${apt.paymentStatus != 'completed'}">
+                                            <span class="text-xs text-gray-400">Unavailable</span>
+                                        </c:if>
                                     </td>
                                 </tr>
                             </c:forEach>

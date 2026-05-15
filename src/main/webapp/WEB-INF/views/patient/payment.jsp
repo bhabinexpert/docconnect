@@ -8,7 +8,7 @@
         <h1 class="text-3xl font-bold text-gray-900 mb-8">Complete Payment</h1>
 
         <%-- Info banner — shown when payment is still pending --%>
-        <c:if test="${existingPayment == null || existingPayment.status != 'completed'}">
+        <c:if test="${requestScope.existingPayment == null || requestScope.existingPayment.status != 'completed'}">
             <div class="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-xl flex items-center space-x-3">
                 <i class="fas fa-info-circle text-blue-500 text-lg"></i>
                 <span class="text-blue-700 text-sm font-medium">Your appointment slot is reserved. Complete payment below to confirm your booking.</span>
@@ -22,7 +22,7 @@
         </c:if>
 
         <%-- Already paid --%>
-        <c:if test="${existingPayment != null && existingPayment.status == 'completed'}">
+        <c:if test="${requestScope.existingPayment != null && requestScope.existingPayment.status == 'completed'}">
             <div class="bg-white rounded-2xl shadow-sm border border-green-200 p-8 text-center">
                 <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <i class="fas fa-check-circle text-green-500 text-4xl"></i>
@@ -30,7 +30,7 @@
                 <h2 class="text-2xl font-bold text-green-700 mb-2">Payment Successful!</h2>
                 <p class="text-gray-500 mb-1">Your appointment has been confirmed.</p>
                 <p class="text-gray-400 text-sm mb-6">
-                    Transaction ID: <span class="font-mono font-semibold">${existingPayment.transactionId}</span>
+                    Transaction ID: <span class="font-mono font-semibold">${requestScope.existingPayment.transactionId}</span>
                 </p>
                 <a href="${pageContext.request.contextPath}/patient/appointments"
                    class="inline-block px-8 py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-all">
@@ -40,7 +40,7 @@
         </c:if>
 
         <%-- Payment form — shown when payment not yet completed --%>
-        <c:if test="${existingPayment == null || existingPayment.status != 'completed'}">
+        <c:if test="${requestScope.existingPayment == null || requestScope.existingPayment.status != 'completed'}">
 
             <%-- Appointment summary card --%>
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">

@@ -127,6 +127,10 @@
         <servlet-name>PaymentServlet</servlet-name>
         <url-pattern>/patient/payment/verify</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PaymentServlet</servlet-name>
+        <url-pattern>/payment/verify</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>AppointmentReceiptServlet</servlet-name>

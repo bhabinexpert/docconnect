@@ -3,9 +3,7 @@
 
 <!-- Navigation Bar -->
 <c:choose>
-<%-- ═══════════════════════════════════════════════════════════
-     ADMIN NAVBAR — management-focused, no patient-facing links
-     ═══════════════════════════════════════════════════════════ --%>
+
 <c:when test="${sessionScope.userRole == 'admin'}">
 <nav class="bg-gray-900 shadow-lg sticky top-0 z-50 border-b border-gray-700">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -90,9 +88,7 @@
 </nav>
 </c:when>
 
-<%-- ═══════════════════════════════════════════════════════════
-     PATIENT / GUEST NAVBAR — booking-focused
-     ═══════════════════════════════════════════════════════════ --%>
+
 <c:otherwise>
 <nav class="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-gray-100">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

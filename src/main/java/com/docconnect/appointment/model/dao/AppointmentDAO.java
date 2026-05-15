@@ -120,7 +120,7 @@ public class AppointmentDAO {
                 ps.setInt(3, appointment.getSlotId());
                 ps.setDate(4, Date.valueOf(appointment.getAppointmentDate()));
                 ps.setInt(5, token);
-                ps.setString(6, appointment.getStatus() != null ? appointment.getStatus() : "confirmed");
+                ps.setString(6, appointment.getStatus() != null ? appointment.getStatus() : "pending_payment");
                 ps.setString(7, appointment.getNotes());
 
                 int affected = ps.executeUpdate();
@@ -280,7 +280,7 @@ public class AppointmentDAO {
      */
     public boolean isSlotBooked(int slotId, java.time.LocalDate date) {
         String sql = "SELECT COUNT(*) FROM appointments WHERE slot_id = ? AND appointment_date = ? "
-                + "AND status IN ('confirmed', 'rescheduled')";
+                + "AND status IN ('pending_payment', 'confirmed', 'rescheduled')";
         try (Connection conn = DbConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 

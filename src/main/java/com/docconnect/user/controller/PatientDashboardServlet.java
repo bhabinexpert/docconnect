@@ -32,7 +32,7 @@ public class PatientDashboardServlet extends HttpServlet {
 
         // Count by status
         long upcoming = appointments.stream()
-                .filter(a -> a.isConfirmed() || a.isRescheduled())
+                .filter(a -> "completed".equals(a.getPaymentStatus()) && (a.isConfirmed() || a.isRescheduled()))
                 .count();
         long completed = appointments.stream()
                 .filter(Appointment::isCompleted)

@@ -74,16 +74,11 @@
 
             <div class="mt-6 text-center">
                 <p class="text-gray-500 text-sm">Don't have an account?
-                    <a href="${pageContext.request.contextPath}/register" class="text-primary-600 font-semibold hover:text-primary-700 transition-colors" id="login-to-register">Create one here</a>
+                    <a href="${pageContext.request.contextPath}/register" class="text-primary-600 font-semibold hover:text-primary-700 transition-colors" id="login-to-register">Sign up</a>
                 </p>
             </div>
 
-            <%-- ADMIN CREDENTIALS (keep private — never expose in UI)
-                 Email : admin@docconnect.com
-                 Pass  : admin123
-                 Role  : admin
-                 Note  : Change this password after first login.
-            --%>
+
         </div>
     </div>
 </main>

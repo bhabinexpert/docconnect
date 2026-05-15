@@ -96,7 +96,7 @@
 
             <div class="mt-6 text-center">
                 <p class="text-gray-500 text-sm">Already have an account?
-                    <a href="${pageContext.request.contextPath}/login" class="text-primary-600 font-semibold hover:text-primary-700 transition-colors">Sign in here</a>
+                    <a href="${pageContext.request.contextPath}/login" class="text-primary-600 font-semibold hover:text-primary-700 transition-colors">Login</a>
                 </p>
             </div>
         </div>

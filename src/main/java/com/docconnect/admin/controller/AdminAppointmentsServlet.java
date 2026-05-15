@@ -2,6 +2,8 @@ package com.docconnect.admin.controller;
 
 import com.docconnect.appointment.model.Appointment;
 import com.docconnect.appointment.service.AppointmentService;
+import com.docconnect.payment.model.Payment;
+import com.docconnect.payment.service.PaymentService;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -18,6 +20,7 @@ public class AdminAppointmentsServlet extends HttpServlet {
 
     private static final Logger LOGGER = Logger.getLogger(AdminAppointmentsServlet.class.getName());
     private final AppointmentService appointmentService = new AppointmentService();
+    private final PaymentService paymentService = new PaymentService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -46,6 +49,15 @@ public class AdminAppointmentsServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() +
                             "/admin/appointments?error=Invalid+status+value.");
                     return;
+                }
+
+                if (status.matches("confirmed|completed|rescheduled")) {
+                    Payment payment = paymentService.getPaymentByAppointmentId(appointmentId);
+                    if (payment == null || !payment.isCompleted()) {
+                        response.sendRedirect(request.getContextPath() +
+                                "/admin/appointments?error=Cannot+confirm+an+unpaid+appointment.");
+                        return;
+                    }
                 }
 
                 if (appointmentService.updateStatus(appointmentId, status)) {

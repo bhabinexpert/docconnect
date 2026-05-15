@@ -13,7 +13,7 @@
             </div>
             <h1 class="text-4xl md:text-5xl font-black mb-4">About <span class="text-accent-200">DocConnect Nepal</span></h1>
             <p class="text-lg text-blue-100 max-w-2xl mx-auto leading-relaxed">
-                Bridging patients and healthcare professionals through a seamless, trusted digital platform — built for Nepal, built for you.
+                Bridging patients and healthcare professionals through a seamless, trusted digital platform, built for Nepal, built for you.
             </p>
         </div>
     </section>
@@ -30,7 +30,7 @@
                     <p class="text-gray-600 leading-relaxed">
                         To make quality healthcare accessible to every Nepali citizen by providing a reliable platform
                         where patients can discover qualified doctors, book appointments online, and manage their health
-                        journey with ease — eliminating long queues and unnecessary wait times.
+                        journey with ease, eliminating long queues and unnecessary wait times.
                     </p>
                 </div>
                 <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
@@ -39,7 +39,7 @@
                     </div>
                     <h2 class="text-2xl font-black text-gray-900 mb-3">Our Vision</h2>
                     <p class="text-gray-600 leading-relaxed">
-                        To become Nepal's most trusted healthcare appointment platform — connecting every hospital,
+                        To become Nepal's most trusted healthcare appointment platform, connecting every hospital,
                         clinic, and specialist with patients across the country through transparent, technology-driven
                         healthcare solutions that put patient wellbeing first.
                     </p>
@@ -49,7 +49,7 @@
             <!-- Stats -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
                 <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 text-center">
-                    <p class="text-4xl font-black text-primary-600 mb-1">50+</p>
+                    <p class="text-4xl font-black text-primary-600 mb-1">10+</p>
                     <p class="text-sm text-gray-500 font-medium">Verified Doctors</p>
                 </div>
                 <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 text-center">
@@ -57,7 +57,7 @@
                     <p class="text-sm text-gray-500 font-medium">Specializations</p>
                 </div>
                 <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 text-center">
-                    <p class="text-4xl font-black text-green-600 mb-1">500+</p>
+                    <p class="text-4xl font-black text-green-600 mb-1">100+</p>
                     <p class="text-sm text-gray-500 font-medium">Appointments Booked</p>
                 </div>
                 <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 text-center">
@@ -89,14 +89,14 @@
                             <i class="fas fa-mobile-alt text-purple-600 text-xl"></i>
                         </div>
                         <h3 class="text-lg font-bold text-gray-900 mb-2">Digital Receipts</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">Get printable appointment receipts with your turn number, doctor details, and payment summary — accessible anytime from your dashboard.</p>
+                        <p class="text-gray-500 text-sm leading-relaxed">Get printable appointment receipts with your turn number, doctor details, and payment summary, accessible anytime from your dashboard.</p>
                     </div>
                     <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 group hover:shadow-md transition-all">
                         <div class="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-orange-100 transition-colors">
                             <i class="fas fa-shield-alt text-orange-600 text-xl"></i>
                         </div>
                         <h3 class="text-lg font-bold text-gray-900 mb-2">Secure Payments</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">Pay consultation fees securely via Khalti — Nepal's trusted digital wallet — or at the clinic. Every transaction is recorded and verifiable.</p>
+                        <p class="text-gray-500 text-sm leading-relaxed">Pay consultation fees securely via Khalti, Nepal's trusted digital wallet, or at the clinic. Every transaction is recorded and verifiable.</p>
                     </div>
                     <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 group hover:shadow-md transition-all">
                         <div class="w-12 h-12 bg-teal-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-teal-100 transition-colors">

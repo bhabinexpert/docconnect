@@ -2,6 +2,8 @@ package com.docconnect.payment.service;
 
 import com.docconnect.payment.model.dao.PaymentDAO;
 import com.docconnect.payment.model.Payment;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -9,6 +11,7 @@ import java.io.*;
 import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URI;
+import java.net.URLEncoder;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -30,10 +33,17 @@ public class PaymentService {
     private final PaymentDAO paymentDAO = new PaymentDAO();
 
     // Khalti ePay v2 Sandbox credentials
-    public static final String KHALTI_PUBLIC_KEY  = "1b2a0016106c41619ef3df109b964f08";  // for reference only
-    public static final String KHALTI_SECRET_KEY  = "729e6a0f1de44ac3a139e73eaacc4a32"; // used in Authorization header
+    public static final String KHALTI_PUBLIC_KEY = "1b2a0016106c41619ef3df109b964f08";  // for reference only
+    private static final String DEFAULT_KHALTI_SECRET_KEY = "729e6a0f1de44ac3a139e73eaacc4a32";
     private static final String KHALTI_INITIATE_URL = "https://dev.khalti.com/api/v2/epayment/initiate/";
     private static final String KHALTI_LOOKUP_URL   = "https://dev.khalti.com/api/v2/epayment/lookup/";
+    private static final String DEFAULT_KHALTI_CHECKOUT_URL = "https://test-pay.khalti.com/?pidx=";
+
+    public enum VerificationStatus {
+        COMPLETED,
+        PENDING,
+        FAILED
+    }
 
     /**
      * Step 1: Initiates a Khalti ePay v2 payment.
@@ -73,8 +83,12 @@ public class PaymentService {
                 return null;
             }
 
-            String pidx       = resp.get("pidx").getAsString();
-            String paymentUrl = resp.get("payment_url").getAsString();
+            String pidx = resp.get("pidx").getAsString();
+            String paymentUrl = extractPaymentUrl(resp, pidx);
+            if (!hasText(paymentUrl)) {
+                LOGGER.severe("Khalti initiation failed — no valid payment_url for pidx: " + pidx);
+                return null;
+            }
 
             // Persist the payment record with pidx stored in transaction_id
             if (existing != null) {
@@ -105,11 +119,11 @@ public class PaymentService {
      * status == "Completed", then updates the payment record with the real
      * Khalti transaction_id and marks it completed.
      *
-     * @return true if payment is confirmed as Completed
+     * @return normalized verification result from lookup response
      */
-    public boolean lookupAndVerify(String pidx) {
+    public VerificationStatus lookupAndVerify(String pidx) {
         try {
-            String requestBody  = "{\"pidx\":\"" + pidx + "\"}";
+            String requestBody = "{\"pidx\":\"" + escape(pidx) + "\"}";
             String responseBody = postJson(KHALTI_LOOKUP_URL, requestBody);
             LOGGER.info("Khalti lookup response: " + responseBody);
 
@@ -117,35 +131,47 @@ public class PaymentService {
 
             if (!resp.has("status")) {
                 LOGGER.severe("Khalti lookup failed — no status in response: " + responseBody);
-                return false;
+                return VerificationStatus.FAILED;
             }
 
-            String status = resp.get("status").getAsString();
+            String status = resp.get("status").getAsString().trim();
 
-            if (!"Completed".equalsIgnoreCase(status)) {
-                LOGGER.warning("Khalti payment not completed. Status: " + status);
-                return false;
-            }
-
-            // Use real transaction_id if available, fall back to pidx
-            String transactionId = (resp.has("transaction_id") && !resp.get("transaction_id").isJsonNull())
-                    ? resp.get("transaction_id").getAsString()
-                    : pidx;
+            // Use callback pidx unless a transaction_id is available.
+            String transactionId = extractTransactionId(resp, pidx);
 
             Payment payment = paymentDAO.findByPidx(pidx);
             if (payment == null) {
                 LOGGER.severe("No payment record found for pidx: " + pidx);
-                return false;
+                return VerificationStatus.FAILED;
             }
 
-            paymentDAO.updateStatus(payment.getId(), "completed", transactionId);
-            LOGGER.info("Payment confirmed. AppointmentId=" + payment.getAppointmentId()
-                    + " TransactionId=" + transactionId);
-            return true;
+            if ("Completed".equalsIgnoreCase(status)) {
+                paymentDAO.updateStatus(payment.getId(), "completed", transactionId);
+                LOGGER.info("Payment confirmed. AppointmentId=" + payment.getAppointmentId()
+                        + " TransactionId=" + transactionId);
+                return VerificationStatus.COMPLETED;
+            }
+
+            if ("Pending".equalsIgnoreCase(status) || "Initiated".equalsIgnoreCase(status)) {
+                paymentDAO.updateStatus(payment.getId(), "pending", pidx);
+                LOGGER.info("Payment is still pending. AppointmentId=" + payment.getAppointmentId()
+                        + " Status=" + status);
+                return VerificationStatus.PENDING;
+            }
+
+            String normalized = status.toLowerCase();
+            if ("refunded".equals(normalized) || "expired".equals(normalized)) {
+                paymentDAO.updateStatus(payment.getId(), normalized, transactionId);
+            } else {
+                paymentDAO.updateStatus(payment.getId(), "failed", transactionId);
+            }
+            LOGGER.warning("Payment could not be completed. AppointmentId=" + payment.getAppointmentId()
+                    + " Status=" + status);
+            return VerificationStatus.FAILED;
 
         } catch (Exception e) {
             LOGGER.severe("Error verifying Khalti payment: " + e.getMessage());
-            return false;
+            return VerificationStatus.FAILED;
         }
     }
 
@@ -190,21 +216,67 @@ public class PaymentService {
     // Private helpers
     // -------------------------------------------------------------------------
 
+    private String extractPaymentUrl(JsonObject response, String pidx) {
+        String rawPaymentUrl = null;
+        if (response.has("payment_url")) {
+            JsonElement paymentUrlElement = response.get("payment_url");
+            if (paymentUrlElement != null && !paymentUrlElement.isJsonNull()) {
+                rawPaymentUrl = paymentUrlElement.getAsString();
+            }
+        }
+
+        if (!hasText(rawPaymentUrl)) {
+            return resolveCheckoutBaseUrl() + URLEncoder.encode(pidx, StandardCharsets.UTF_8);
+        }
+
+        String normalized = rawPaymentUrl.trim()
+                .replace("?pid=", "?pidx=")
+                .replace("&pid=", "&pidx=");
+
+        if (!normalized.matches(".*[?&]pidx=.*")) {
+            String delimiter = normalized.contains("?") ? "&" : "?";
+            normalized += delimiter + "pidx=" + URLEncoder.encode(pidx, StandardCharsets.UTF_8);
+        }
+        return normalized;
+    }
+
+    private String resolveCheckoutBaseUrl() {
+        String configured = System.getenv("KHALTI_CHECKOUT_URL");
+        if (!hasText(configured)) {
+            configured = System.getProperty("khalti.checkoutUrl");
+        }
+        if (!hasText(configured)) {
+            configured = DEFAULT_KHALTI_CHECKOUT_URL;
+        }
+        configured = configured.trim();
+        return configured.endsWith("=") ? configured : (configured + (configured.contains("?") ? "&pidx=" : "?pidx="));
+    }
+
     private String buildInitiateJson(String returnUrl, String websiteUrl,
                                      long amountPaisa, int appointmentId,
                                      String name, String email, String phone) {
-        return "{"
-                + "\"return_url\":\"" + returnUrl + "\","
-                + "\"website_url\":\"" + websiteUrl + "\","
-                + "\"amount\":" + amountPaisa + ","
-                + "\"purchase_order_id\":\"APT-" + appointmentId + "\","
-                + "\"purchase_order_name\":\"DocConnect Appointment #" + appointmentId + "\","
-                + "\"customer_info\":{"
-                +   "\"name\":\"" + escape(name) + "\","
-                +   "\"email\":\"" + escape(email) + "\","
-                +   "\"phone\":\"" + escape(phone) + "\""
-                + "}"
-                + "}";
+        JsonObject body = new JsonObject();
+        body.addProperty("return_url", returnUrl);
+        body.addProperty("website_url", websiteUrl);
+        body.addProperty("amount", amountPaisa);
+        body.addProperty("purchase_order_id", "APT-" + appointmentId);
+        body.addProperty("purchase_order_name", "DocConnect Appointment #" + appointmentId);
+
+        JsonObject customerInfo = new JsonObject();
+        if (hasText(name)) {
+            customerInfo.addProperty("name", name.trim());
+        }
+        if (hasText(email) && isLikelyEmail(email.trim())) {
+            customerInfo.addProperty("email", email.trim());
+        }
+        if (hasText(phone) && isLikelyPhone(phone.trim())) {
+            customerInfo.addProperty("phone", phone.trim());
+        }
+        if (customerInfo.size() > 0) {
+            body.add("customer_info", customerInfo);
+        }
+
+        return body.toString();
     }
 
     /**
@@ -215,8 +287,9 @@ public class PaymentService {
         URL url = URI.create(targetUrl).toURL();
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
-        conn.setRequestProperty("Authorization", "Key " + KHALTI_SECRET_KEY);
+        conn.setRequestProperty("Authorization", resolveAuthorizationHeader());
         conn.setRequestProperty("Content-Type", "application/json");
+        conn.setRequestProperty("Accept", "application/json");
         conn.setConnectTimeout(10_000);
         conn.setReadTimeout(15_000);
         conn.setDoOutput(true);
@@ -243,5 +316,42 @@ public class PaymentService {
     private String escape(String s) {
         if (s == null) return "";
         return s.replace("\\", "\\\\").replace("\"", "\\\"");
+    }
+
+    private String extractTransactionId(JsonObject response, String fallbackPidx) {
+        JsonElement transactionIdElement = response.has("transaction_id")
+                ? response.get("transaction_id")
+                : JsonNull.INSTANCE;
+        if (transactionIdElement != null && !transactionIdElement.isJsonNull()) {
+            String value = transactionIdElement.getAsString();
+            if (hasText(value)) {
+                return value.trim();
+            }
+        }
+        return fallbackPidx;
+    }
+
+    private String resolveAuthorizationHeader() {
+        String configured = System.getenv("KHALTI_SECRET_KEY");
+        if (!hasText(configured)) {
+            configured = System.getProperty("khalti.secretKey");
+        }
+        if (!hasText(configured)) {
+            configured = DEFAULT_KHALTI_SECRET_KEY;
+        }
+        configured = configured.trim();
+        return configured.regionMatches(true, 0, "Key ", 0, 4) ? configured : "Key " + configured;
+    }
+
+    private boolean hasText(String value) {
+        return value != null && !value.trim().isEmpty();
+    }
+
+    private boolean isLikelyEmail(String email) {
+        return email.contains("@") && email.indexOf('@') > 0 && email.indexOf('@') < email.length() - 1;
+    }
+
+    private boolean isLikelyPhone(String phone) {
+        return phone.matches("^\\d{10}$");
     }
 }

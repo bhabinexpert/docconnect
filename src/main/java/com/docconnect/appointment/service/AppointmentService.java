@@ -85,7 +85,7 @@ public class AppointmentService {
         appointment.setDoctorId(doctorId);
         appointment.setSlotId(slotId);
         appointment.setAppointmentDate(date);
-        appointment.setStatus("confirmed");
+        appointment.setStatus("pending_payment");
         appointment.setNotes(notes);
 
         int id = appointmentDAO.create(appointment);

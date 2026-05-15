@@ -62,8 +62,8 @@ public class VisitorPageRedirectFilter implements Filter {
         return "/".equals(path)
                 || "/index.jsp".equals(path)
                 || "/home".equals(path)
-                || "/about".equals(path)
-                || "/contact".equals(path)
+//                || "/about".equals(path)
+//                || "/contact".equals(path)
                 || "/login".equals(path)
                 || "/register".equals(path);
     }

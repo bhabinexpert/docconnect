@@ -14,7 +14,7 @@
         <div class="max-w-3xl">
             <div class="inline-flex items-center px-4 py-1.5 bg-white/15 backdrop-blur-sm rounded-full text-white text-sm font-medium mb-6 slide-up">
                 <span class="w-2 h-2 bg-accent-400 rounded-full mr-2 pulse-dot"></span>
-                Trusted by 10,000+ patients across Nepal
+                Trusted by 1,000+ patients across Nepal
             </div>
             <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6 slide-up">
                 Your Health,<br>
@@ -39,7 +39,7 @@
 <section class="relative -mt-10 z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="glass rounded-2xl p-6 text-center card-hover shadow-lg">
-            <div class="text-3xl font-bold text-primary-600 mb-1">50+</div>
+            <div class="text-3xl font-bold text-primary-600 mb-1">10+</div>
             <div class="text-sm text-gray-500 font-medium">Expert Doctors</div>
         </div>
         <div class="glass rounded-2xl p-6 text-center card-hover shadow-lg">
@@ -47,7 +47,7 @@
             <div class="text-sm text-gray-500 font-medium">Specializations</div>
         </div>
         <div class="glass rounded-2xl p-6 text-center card-hover shadow-lg">
-            <div class="text-3xl font-bold text-primary-600 mb-1">10K+</div>
+            <div class="text-3xl font-bold text-primary-600 mb-1">1K+</div>
             <div class="text-sm text-gray-500 font-medium">Happy Patients</div>
         </div>
         <div class="glass rounded-2xl p-6 text-center card-hover shadow-lg">
