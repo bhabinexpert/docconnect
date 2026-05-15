@@ -98,7 +98,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
             <!-- Logo -->
-            <a href="${pageContext.request.contextPath}/home" class="flex items-center space-x-3 group" id="nav-logo">
+            <a href="${pageContext.request.contextPath}${sessionScope.user != null ? '/patient/dashboard' : '/home'}" class="flex items-center space-x-3 group" id="nav-logo">
                 <div class="w-10 h-10 bg-gradient-to-br from-primary-600 to-accent-500 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-primary-500/30 transition-all duration-300">
                     <i class="fas fa-heartbeat text-white text-lg"></i>
                 </div>
@@ -168,14 +168,17 @@
 
             <!-- Desktop Navigation -->
             <div class="hidden md:flex items-center space-x-0.5">
-                <a href="${pageContext.request.contextPath}/home" class="px-3 py-2 rounded-lg text-gray-600 hover:text-primary-600 hover:bg-primary-50 transition-all duration-200 font-medium text-sm whitespace-nowrap" id="nav-home">Home</a>
-                <a href="${pageContext.request.contextPath}/doctors" class="px-3 py-2 rounded-lg text-gray-600 hover:text-primary-600 hover:bg-primary-50 transition-all duration-200 font-medium text-sm whitespace-nowrap" id="nav-doctors">Doctors</a>
-                <a href="${pageContext.request.contextPath}/about" class="px-3 py-2 rounded-lg text-gray-600 hover:text-primary-600 hover:bg-primary-50 transition-all duration-200 font-medium text-sm whitespace-nowrap" id="nav-about">About</a>
-                <a href="${pageContext.request.contextPath}/contact" class="px-3 py-2 rounded-lg text-gray-600 hover:text-primary-600 hover:bg-primary-50 transition-all duration-200 font-medium text-sm whitespace-nowrap" id="nav-contact">Contact</a>
+                <c:if test="${sessionScope.user == null}">
+                    <a href="${pageContext.request.contextPath}/home" class="px-3 py-2 rounded-lg text-gray-600 hover:text-primary-600 hover:bg-primary-50 transition-all duration-200 font-medium text-sm whitespace-nowrap" id="nav-home">Home</a>
+                    <a href="${pageContext.request.contextPath}/doctors" class="px-3 py-2 rounded-lg text-gray-600 hover:text-primary-600 hover:bg-primary-50 transition-all duration-200 font-medium text-sm whitespace-nowrap" id="nav-doctors">Doctors</a>
+                    <a href="${pageContext.request.contextPath}/about" class="px-3 py-2 rounded-lg text-gray-600 hover:text-primary-600 hover:bg-primary-50 transition-all duration-200 font-medium text-sm whitespace-nowrap" id="nav-about">About</a>
+                    <a href="${pageContext.request.contextPath}/contact" class="px-3 py-2 rounded-lg text-gray-600 hover:text-primary-600 hover:bg-primary-50 transition-all duration-200 font-medium text-sm whitespace-nowrap" id="nav-contact">Contact</a>
+                </c:if>
 
                 <c:choose>
                     <c:when test="${sessionScope.user != null}">
                         <a href="${pageContext.request.contextPath}/patient/dashboard" class="px-3 py-2 rounded-lg text-gray-600 hover:text-primary-600 hover:bg-primary-50 transition-all duration-200 font-medium text-sm whitespace-nowrap" id="nav-dashboard">Dashboard</a>
+                        <a href="${pageContext.request.contextPath}/doctors" class="px-3 py-2 rounded-lg text-gray-600 hover:text-primary-600 hover:bg-primary-50 transition-all duration-200 font-medium text-sm whitespace-nowrap" id="nav-doctors">Find Doctors</a>
                         <a href="${pageContext.request.contextPath}/patient/appointments" class="px-3 py-2 rounded-lg text-gray-600 hover:text-primary-600 hover:bg-primary-50 transition-all duration-200 font-medium text-sm whitespace-nowrap" id="nav-appointments">Appointments</a>
 
                         <!-- User Dropdown -->
@@ -229,13 +232,16 @@
                     </div>
                 </form>
             </div>
-            <a href="${pageContext.request.contextPath}/home" class="block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-primary-50 hover:text-primary-600 transition-all font-medium text-sm"><i class="fas fa-home mr-2 w-5"></i>Home</a>
-            <a href="${pageContext.request.contextPath}/doctors" class="block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-primary-50 hover:text-primary-600 transition-all font-medium text-sm"><i class="fas fa-user-md mr-2 w-5"></i>Doctors</a>
-            <a href="${pageContext.request.contextPath}/about" class="block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-primary-50 hover:text-primary-600 transition-all font-medium text-sm"><i class="fas fa-info-circle mr-2 w-5"></i>About</a>
-            <a href="${pageContext.request.contextPath}/contact" class="block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-primary-50 hover:text-primary-600 transition-all font-medium text-sm"><i class="fas fa-headset mr-2 w-5"></i>Contact</a>
+            <c:if test="${sessionScope.user == null}">
+                <a href="${pageContext.request.contextPath}/home" class="block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-primary-50 hover:text-primary-600 transition-all font-medium text-sm"><i class="fas fa-home mr-2 w-5"></i>Home</a>
+                <a href="${pageContext.request.contextPath}/doctors" class="block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-primary-50 hover:text-primary-600 transition-all font-medium text-sm"><i class="fas fa-user-md mr-2 w-5"></i>Doctors</a>
+                <a href="${pageContext.request.contextPath}/about" class="block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-primary-50 hover:text-primary-600 transition-all font-medium text-sm"><i class="fas fa-info-circle mr-2 w-5"></i>About</a>
+                <a href="${pageContext.request.contextPath}/contact" class="block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-primary-50 hover:text-primary-600 transition-all font-medium text-sm"><i class="fas fa-headset mr-2 w-5"></i>Contact</a>
+            </c:if>
             <c:choose>
                 <c:when test="${sessionScope.user != null}">
                     <a href="${pageContext.request.contextPath}/patient/dashboard" class="block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-primary-50 hover:text-primary-600 transition-all font-medium text-sm"><i class="fas fa-columns mr-2 w-5"></i>Dashboard</a>
+                    <a href="${pageContext.request.contextPath}/doctors" class="block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-primary-50 hover:text-primary-600 transition-all font-medium text-sm"><i class="fas fa-user-md mr-2 w-5"></i>Find Doctors</a>
                     <a href="${pageContext.request.contextPath}/patient/appointments" class="block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-primary-50 hover:text-primary-600 transition-all font-medium text-sm"><i class="fas fa-calendar-check mr-2 w-5"></i>Appointments</a>
                     <a href="${pageContext.request.contextPath}/patient/profile" class="block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-primary-50 hover:text-primary-600 transition-all font-medium text-sm"><i class="fas fa-user mr-2 w-5"></i>Profile</a>
                     <hr class="border-gray-100 my-2">
