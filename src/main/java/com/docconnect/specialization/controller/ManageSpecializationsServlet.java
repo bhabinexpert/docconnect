@@ -4,7 +4,6 @@ import com.docconnect.specialization.model.Specialization;
 import com.docconnect.doctor.service.DoctorService;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,7 +14,6 @@ import java.util.logging.Logger;
 /**
  * Admin specialization management controller.
  */
-@WebServlet(name = "ManageSpecializationsServlet", urlPatterns = {"/admin/specializations"})
 public class ManageSpecializationsServlet extends HttpServlet {
 
     private static final Logger LOGGER = Logger.getLogger(ManageSpecializationsServlet.class.getName());

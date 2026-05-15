@@ -7,12 +7,11 @@ import com.docconnect.appointment.service.AppointmentService;
 import com.docconnect.doctor.service.DoctorService;
 import com.docconnect.slot.service.SlotService;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -22,7 +21,6 @@ import java.util.logging.Logger;
 /**
  * Book appointment controller.
  */
-@WebServlet(name = "BookAppointmentServlet", urlPatterns = {"/patient/book"})
 public class BookAppointmentServlet extends HttpServlet {
 
     private static final Logger LOGGER = Logger.getLogger(BookAppointmentServlet.class.getName());
@@ -74,7 +72,6 @@ public class BookAppointmentServlet extends HttpServlet {
 
             if (error == null) {
                 // Store booking details in session; appointment will be created at payment time
-                HttpSession session = request.getSession();
                 session.setAttribute("bookingDoctorId", doctorId);
                 session.setAttribute("bookingSlotId", slotId);
                 session.setAttribute("bookingDate", date.toString());

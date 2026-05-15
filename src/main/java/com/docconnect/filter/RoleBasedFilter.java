@@ -3,7 +3,6 @@ package com.docconnect.filter;
 import com.docconnect.user.model.User;
 
 import jakarta.servlet.*;
-import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -14,7 +13,6 @@ import java.util.logging.Logger;
  * Role-based access control filter.
  * Ensures admin routes are only accessible by admin users.
  */
-@WebFilter(urlPatterns = {"/admin/*"})
 public class RoleBasedFilter implements Filter {
 
     private static final Logger LOGGER = Logger.getLogger(RoleBasedFilter.class.getName());

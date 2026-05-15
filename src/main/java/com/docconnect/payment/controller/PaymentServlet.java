@@ -10,12 +10,11 @@ import com.docconnect.user.model.User;
 import com.docconnect.appointment.service.AppointmentService;
 import com.docconnect.payment.service.PaymentService;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -34,8 +33,6 @@ import java.util.logging.Logger;
  * not when the booking form is submitted. This ensures no "Awaiting Payment"
  * appointments appear — every appointment in the DB has a completed payment.
  */
-@WebServlet(name = "PaymentServlet",
-        urlPatterns = {"/patient/payment", "/patient/payments", "/patient/payment/verify"})
 public class PaymentServlet extends HttpServlet {
 
     private static final Logger LOGGER = Logger.getLogger(PaymentServlet.class.getName());

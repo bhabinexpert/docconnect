@@ -6,11 +6,10 @@ import com.docconnect.doctor.service.DoctorService;
 import com.docconnect.payment.service.PaymentService;
 import com.docconnect.user.service.UserService;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
@@ -18,7 +17,6 @@ import java.util.logging.Logger;
 /**
  * Admin reports and analytics controller.
  */
-@WebServlet(name = "ReportsServlet", urlPatterns = {"/admin/reports"})
 public class ReportsServlet extends HttpServlet {
 
     private static final Logger LOGGER = Logger.getLogger(ReportsServlet.class.getName());

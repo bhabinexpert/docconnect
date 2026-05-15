@@ -3,7 +3,6 @@ package com.docconnect;
 import java.io.IOException;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -11,7 +10,6 @@ import jakarta.servlet.http.HttpServletResponse;
 /**
  * Access denied page controller.
  */
-@WebServlet(name = "AccessDeniedServlet", urlPatterns = {"/access-denied"})
 public class AccessDeniedServlet extends HttpServlet {
 
     @Override

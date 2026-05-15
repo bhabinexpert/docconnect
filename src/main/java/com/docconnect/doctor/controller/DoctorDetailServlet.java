@@ -6,7 +6,6 @@ import com.docconnect.doctor.service.DoctorService;
 import com.docconnect.slot.service.SlotService;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,7 +17,6 @@ import java.util.logging.Logger;
  * Public doctor detail view for guests and members.
  * Shows availability and details.
  */
-@WebServlet(name = "DoctorDetailServlet", urlPatterns = {"/doctor"})
 public class DoctorDetailServlet extends HttpServlet {
 
     private static final Logger LOGGER = Logger.getLogger(DoctorDetailServlet.class.getName());

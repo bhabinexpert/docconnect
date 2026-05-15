@@ -4,11 +4,10 @@ import com.docconnect.doctor.model.Doctor;
 import com.docconnect.specialization.model.Specialization;
 import com.docconnect.doctor.service.DoctorService;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
@@ -16,7 +15,6 @@ import java.util.logging.Logger;
 /**
  * Home page controller.
  */
-@WebServlet(name = "HomeServlet", urlPatterns = {"", "/home"})
 public class HomeServlet extends HttpServlet {
 
     private static final Logger LOGGER = Logger.getLogger(HomeServlet.class.getName());
@@ -27,7 +25,7 @@ public class HomeServlet extends HttpServlet {
             throws ServletException, IOException {
 
         // Admins have no business on the landing page — send them straight to their dashboard
-        javax.servlet.http.HttpSession session = request.getSession(false);
+        jakarta.servlet.http.HttpSession session = request.getSession(false);
         if (session != null && "admin".equals(session.getAttribute("userRole"))) {
             response.sendRedirect(request.getContextPath() + "/admin/dashboard");
             return;

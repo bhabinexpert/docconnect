@@ -3,7 +3,6 @@ package com.docconnect.filter;
 import com.docconnect.util.CsrfUtil;
 
 import jakarta.servlet.*;
-import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -13,7 +12,6 @@ import java.util.logging.Logger;
  * CSRF protection filter for all POST requests.
  * Validates CSRF token on form submissions.
  */
-@WebFilter(urlPatterns = {"/*"})
 public class CsrfFilter implements Filter {
 
     private static final Logger LOGGER = Logger.getLogger(CsrfFilter.class.getName());

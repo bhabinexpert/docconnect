@@ -1,7 +1,6 @@
 package com.docconnect.filter;
 
 import jakarta.servlet.*;
-import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -12,7 +11,6 @@ import java.util.logging.Logger;
  * Authentication filter that protects patient and admin routes.
  * Redirects unauthenticated users to the login page.
  */
-@WebFilter(urlPatterns = {"/patient/*", "/admin/*"})
 public class AuthenticationFilter implements Filter {
 
     private static final Logger LOGGER = Logger.getLogger(AuthenticationFilter.class.getName());

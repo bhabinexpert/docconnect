@@ -5,7 +5,6 @@ import com.docconnect.doctor.service.DoctorService;
 import com.google.gson.Gson;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,7 +15,6 @@ import java.util.List;
 /**
  * API end point for live search functionality.
  */
-@WebServlet(name = "SearchApiServlet", urlPatterns = {"/api/search/doctors"})
 public class SearchApiServlet extends HttpServlet {
 
     private final DoctorService doctorService = new DoctorService();
