@@ -192,9 +192,6 @@ public class PaymentService {
         return paymentDAO.findByAppointmentId(appointmentId);
     }
 
-    public Payment getPaymentById(int id) {
-        return paymentDAO.findById(id);
-    }
 
     public List<Payment> getPatientPayments(int patientId) {
         return paymentDAO.findByPatientId(patientId);

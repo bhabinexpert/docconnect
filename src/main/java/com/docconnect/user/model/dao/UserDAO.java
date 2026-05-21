@@ -94,16 +94,17 @@ public class UserDAO {
      * Updates an existing user's profile.
      */
     public boolean update(User user) {
-        String sql = "UPDATE users SET full_name = ?, phone = ?, address = ?, gender = ?, date_of_birth = ? WHERE id = ?";
+        String sql = "UPDATE users SET full_name = ?, phone = ?, address = ?, photo_url = COALESCE(?, photo_url), gender = ?, date_of_birth = ? WHERE id = ?";
         try (Connection conn = DbConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, user.getFullName());
             ps.setString(2, user.getPhone());
             ps.setString(3, user.getAddress());
-            ps.setString(4, user.getGender());
-            ps.setDate(5, user.getDateOfBirth() != null ? Date.valueOf(user.getDateOfBirth()) : null);
-            ps.setInt(6, user.getId());
+            ps.setString(4, user.getPhotoUrl());
+            ps.setString(5, user.getGender());
+            ps.setDate(6, user.getDateOfBirth() != null ? Date.valueOf(user.getDateOfBirth()) : null);
+            ps.setInt(7, user.getId());
 
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -215,6 +216,7 @@ public class UserDAO {
         user.setPasswordHash(rs.getString("password_hash"));
         user.setPhone(rs.getString("phone"));
         user.setAddress(rs.getString("address"));
+        user.setPhotoUrl(rs.getString("photo_url"));
         user.setGender(rs.getString("gender"));
 
         Date dob = rs.getDate("date_of_birth");

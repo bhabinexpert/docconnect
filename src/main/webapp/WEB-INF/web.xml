@@ -149,10 +149,24 @@
     <servlet>
         <servlet-name>ProfileServlet</servlet-name>
         <servlet-class>com.docconnect.user.controller.ProfileServlet</servlet-class>
+        <multipart-config>
+            <file-size-threshold>1048576</file-size-threshold>
+            <max-file-size>5242880</max-file-size>
+            <max-request-size>10485760</max-request-size>
+        </multipart-config>
     </servlet>
     <servlet-mapping>
         <servlet-name>ProfileServlet</servlet-name>
         <url-pattern>/patient/profile</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UploadServlet</servlet-name>
+        <servlet-class>com.docconnect.user.controller.UploadServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UploadServlet</servlet-name>
+        <url-pattern>/uploads/*</url-pattern>
     </servlet-mapping>
 
     <servlet>

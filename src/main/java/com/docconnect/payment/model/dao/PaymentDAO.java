@@ -106,25 +106,6 @@ public class PaymentDAO {
         return null;
     }
 
-    /**
-     * Finds a payment by ID.
-     */
-    public Payment findById(int id) {
-        String sql = "SELECT * FROM payments WHERE id = ?";
-        try (Connection conn = DbConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setInt(1, id);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return mapResultSet(rs);
-                }
-            }
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Error finding payment by id: " + id, e);
-        }
-        return null;
-    }
 
     /**
      * Returns all payments for a patient (via appointments).

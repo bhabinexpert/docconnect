@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <jsp:include page="/WEB-INF/views/common/navbar.jsp" />
 
@@ -15,6 +15,36 @@
         </c:if>
 
         <c:set var="u" value="${sessionScope.user}" />
+
+        <!-- Profile Photo -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 mb-6">
+            <h2 class="text-xl font-bold text-gray-900 mb-6"><i class="fas fa-image mr-2 text-primary-600"></i>Profile Photo</h2>
+            <form method="post" action="${pageContext.request.contextPath}/patient/profile" enctype="multipart/form-data" class="flex items-center space-x-6">
+                <input type="hidden" name="csrfToken" value="${csrfToken}">
+                <input type="hidden" name="action" value="uploadPhoto">
+
+                <div class="w-24 h-24 rounded-full overflow-hidden bg-primary-100 flex items-center justify-center flex-shrink-0 border-2 border-gray-200">
+                    <c:choose>
+                        <c:when test="${not empty u.photoUrl}">
+                            <img id="photoPreview" src="${u.photoUrl}" alt="Profile photo" class="w-full h-full object-cover">
+                        </c:when>
+                        <c:otherwise>
+                            <img id="photoPreview" src="" alt="" class="w-full h-full object-cover hidden">
+                            <span id="photoInitial" class="text-3xl font-bold text-primary-600">${u.fullName.substring(0,1)}</span>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+
+                <div class="flex-1">
+                    <input type="file" name="photo" accept="image/*" required onchange="previewPhoto(event)"
+                           class="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100 cursor-pointer">
+                    <p class="text-xs text-gray-500 mt-2">JPG, PNG, GIF or WEBP. Max 5 MB.</p>
+                    <button type="submit" class="mt-3 px-6 py-2 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-all text-sm shadow-lg shadow-primary-500/25">
+                        <i class="fas fa-upload mr-2"></i>Upload Photo
+                    </button>
+                </div>
+            </form>
+        </div>
 
         <!-- Profile Info -->
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 mb-6">
@@ -101,6 +131,15 @@
 </main>
 
 <script>
+    function previewPhoto(e) {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+        const img = document.getElementById('photoPreview');
+        const initial = document.getElementById('photoInitial');
+        img.src = URL.createObjectURL(file);
+        img.classList.remove('hidden');
+        if (initial) initial.classList.add('hidden');
+    }
     function validatePasswordForm() {
         const np = document.getElementById('newPassword').value;
         const cp = document.getElementById('confirmNewPassword').value;

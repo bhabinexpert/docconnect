@@ -14,6 +14,7 @@ public class User {
     private String passwordHash;
     private String phone;
     private String address;
+    private String photoUrl;
     private String gender;
     private LocalDate dateOfBirth;
     private String role; // "patient" or "admin"
@@ -42,6 +43,9 @@ public class User {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
+    public String getPhotoUrl() { return photoUrl; }
+    public void setPhotoUrl(String photoUrl) { this.photoUrl = photoUrl; }
+    
     public String getPasswordHash() { return passwordHash; }
     public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
 
